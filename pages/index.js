@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -9,8 +10,8 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="title" onClick={() => setNumber(number + 1)}>
-        Learn <a href="https://nextjs.org">Next.js!</a>
+        <h1 className="title">
+        Read <Link href="/posts/first-post"><a>this page!</a></Link>
         </h1>
 
         <p className="description">
