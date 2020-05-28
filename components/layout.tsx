@@ -6,7 +6,12 @@ import utilStyles from 'styles/utils.module.scss'
 const name = 'Tsuyoshi Maeda'
 export const siteTitle = 'Next.js Sample Website'
 
-export default function Layout({ children, home }) {
+type LayoutProps = {
+  children: React.ReactNode;
+  home?: boolean;
+}
+
+export default function Layout({ children, home }: LayoutProps) {
   return (
     <div className={styles.container}>
       <Head>

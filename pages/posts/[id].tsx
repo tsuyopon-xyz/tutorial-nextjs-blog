@@ -1,3 +1,4 @@
+import { GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import Layout from 'components/layout'
 import Date from 'components/date'
@@ -21,8 +22,7 @@ export default function Post({ postData }) {
   )
 }
 
-export async function getStaticPaths() {
-  // Return a list of possible value for id
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths = getAllPostIds()
   return {
     paths,
@@ -30,8 +30,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params }) {
-  // Fetch necessary data for the blog post using params.id
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postData = await getPostData(params.id)
   return {
     props: {

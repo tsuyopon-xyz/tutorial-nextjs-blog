@@ -6,10 +6,17 @@ import html from 'remark-html'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
-export function getSortedPostsData() {
+interface IPostData {
+  id: string;
+  title: string;
+  date: string;
+  contentHtml?: string;
+}
+
+export function getSortedPostsData(): IPostData[] {
   // Get file names under /posts
   const fileNames = fs.readdirSync(postsDirectory)
-  const allPostsData = fileNames.map(fileName => {
+  const allPostsData: IPostData[] = fileNames.map(fileName => {
     // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '')
 
@@ -18,12 +25,13 @@ export function getSortedPostsData() {
     const fileContents = fs.readFileSync(fullPath, 'utf8')
 
     // Use gray-matter to parse the post metadata section
-    const matterResult = matter(fileContents)
+    const matterResult = matter(fileContents);
 
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data
+      title: matterResult.data.title,
+      date: matterResult.data.date,
     }
   })
   // Sort posts by date
@@ -61,12 +69,11 @@ export async function getPostData(id) {
     .process(matterResult.content)
   const contentHtml = processedContent.toString()
 
-  console.log({contentHtml})
-
   // Combine the data with the id
   return {
     id,
+    title: matterResult.data.title,
+    date: matterResult.data.date,
     contentHtml,
-    ...matterResult.data,
   }
 }
